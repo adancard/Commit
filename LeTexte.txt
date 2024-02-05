@@ -16,7 +16,7 @@ git branch -M main - para modificar o branch
 
 git push -u origin main - para mudar de branch
 
-git push origin - Vai enviar os arquivos adicionados *MAIS USADO*
+git push origin {Nome da branch} - Vai enviar os arquivos adicionados *MAIS USADO*
 
 git clone https://github.com/adancard/{Nome do Repositorio}.git - para clonar o diretorio
 
