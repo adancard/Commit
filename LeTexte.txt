@@ -1,0 +1,21 @@
+git init - inicar o git
+
+git status - ver o status da pasta
+
+git add . - para adicionar o arquivo 
+
+git commit - m "descricao do commit" - comitar codigo
+
+git config --global user.name "username" - para adicionar seu nome da conta
+
+git config --global user.email "you@gmail.com" - para adicionar seu email da conta
+
+git remote add origin https://github.com/adancard/{Nome do Repositorio}.git - para adicionar o link da pagina
+
+git branch -M main - para modificar o branch
+
+git push -u origin main - para mudar de branch
+
+git push origin {Nome do arquivo} - Vai dar enviar o arquivo selecionado
+
+git clone https://github.com/adancard/{Nome do Repositorio}.git -  para clonar o diretorio
