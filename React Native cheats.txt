@@ -1,0 +1,15 @@
+*no Cmd*
+
+1°como adm volte ate o caminho "C:\"
+
+2°crie uma pasta qualquer e depois entre na pasta criada
+
+*Fazer tudo isso dentro da pasta*
+
+npx create-expo-app --template ou expo init - para criar um template
+
+npm install - Instalar dependencias
+
+npx expo install react-native-web react-dom @expo/metro-runtime - Instala as dependências necessárias para executar e construir o aplicativo Expo React Native para a web
+
+npx expo start ou npm start - Iniciar o projeto
