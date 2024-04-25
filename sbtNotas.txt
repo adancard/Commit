@@ -1,0 +1,163 @@
+import React, { useState } from 'react';
+import { Dimensions, ImageBackground, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
+
+export default function App() {
+  const [textCompetencia, setTextCompetencia] = useState('');
+  const [escolhaBotao, setEscolhaBotao] = useState('');
+  const [textCriticidade, setTextCriticidade] = useState('');
+  const [isEnable, setIsEnable] = useState(false);
+  const imagem = require('.assetsimgWhatsAp.png')
+
+  const onChangeTextCompetencia = (text) = {
+    setTextCompetencia(text);
+  };
+
+  const onPressBotao = (escolha) = {
+    setEscolhaBotao(escolha);
+  };
+
+  const onChangeTextCriticidade = (text) = {
+    setTextCriticidade(text);
+  };
+
+  const toggleSwitch = () = {
+    setIsEnable((previousState) = !previousState);
+  };
+
+  const onPressConfirmar = () = {
+    console.log('Texto digitado para competência', textCompetencia);
+    console.log('Botão escolhido', escolhaBotao);
+
+    console.log('Texto digitado para critério', textCriticidade);
+    console.log('Switch ativado', isEnable);
+  };
+
+
+
+  return (
+    ScrollView style={styles.container}
+        Text style={styles.titulo}Adicionar CompetenciaText
+        View style={styles.Containersbt}
+          TouchableOpacity style={styles.botao} onPress={() = onPressBotao('S')}
+            Text style={styles.textoButton}SText
+          TouchableOpacity
+
+          TouchableOpacity style={styles.botao} onPress={() = onPressBotao('B')}
+            Text style={styles.textoButton}BText
+          TouchableOpacity
+
+          TouchableOpacity style={styles.botao} onPress={() = onPressBotao('T')}
+            Text style={styles.textoButton}TText
+          TouchableOpacity
+        View
+
+        TextInput
+          style={styles.InputText}
+          value={textCompetencia}
+          onChangeText={onChangeTextCompetencia}
+          placeholder='Digite a Competencia'
+          keyboardType='default'
+        
+
+        Text style={styles.tituloCriticidade}Adicionar CritérioText
+
+        TextInput
+          style={styles.InputText}
+          value={textCriticidade}
+          onChangeText={onChangeTextCriticidade}
+          placeholder='Digite o Critério'
+          keyboardType='default'
+        
+
+        View style={styles.caixaSelecao}
+          Text style={styles.textoSelecao}DesejávelText
+          Switch
+            trackColor={{ false 'green', true 'red' }}
+            onValueChange={toggleSwitch}
+            value={isEnable}
+            style={styles.criticoEdesejavel}
+          
+          Text style={styles.textoSelecao}CríticoText
+        View
+
+        TouchableOpacity style={styles.confirmar} onPress={onPressConfirmar}
+          Text style={styles.buttonConfirmar}ConfirmarText
+        TouchableOpacity
+    ScrollView
+  );
+}
+
+const styles = StyleSheet.create({
+
+
+
+  container {
+    flex 1,
+  },
+  Containersbt {
+    flex 1,
+    alignSelf 'center',
+    justifyContent 'space-between',
+    alignItems 'center',
+    flexDirection 'row',
+    width 300,
+    marginTop 20
+  },
+  titulo {
+    textAlign 'center',
+    fontSize 25,
+    marginTop 50
+  },
+  tituloCriticidade {
+    textAlign 'center',
+    fontSize 25,
+    marginTop 50
+
+  },
+  botao {
+    borderColor 'black',
+    borderWidth 1,
+    width 50,
+    height 50,
+    borderRadius 1000,
+    padding 16,
+    margin 20
+  },
+  textoButton {
+    textAlign 'center',
+    height 200
+  },
+  InputText {
+    justifyContent 'center',
+    alignSelf 'center',
+    borderColor 'black',
+    borderWidth 1,
+    textAlign 'center',
+    width 300,
+    marginTop 30
+  },
+  confirmar {
+    alignSelf 'center',
+    backgroundColor 'green',
+    marginTop 30,
+    height 25,
+    width 200,
+    borderRadius 15
+  },
+  buttonConfirmar {
+    color 'white',
+    textAlign 'center',
+    padding 4,
+  },
+  caixaSelecao {
+    alignSelf 'center',
+    flexDirection 'row',
+    marginTop 20
+
+  },
+  textoSelecao {
+    fontSize 20,
+    alignSelf 'center'
+
+  },
+});
