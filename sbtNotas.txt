@@ -13,40 +13,85 @@ export default function App() {
   const imagem = require('./assets/img/WhatsAp.png')
 
   // ISSO INVOLVE O BANCO
-  // useEffect(() => {
-  //   const fetchCompetencias = async () => {
-  //     try {
-  //       const response = await fetch('https://sua-api.com/competencias');
-  //       const data = await response.json();
-  //       setCompetencias(data);
-  //     } catch (error) {
-  //       console.error('Erro ao buscar as competências:', error);
-  //     }
-  //   };
+   useEffect(() => {
+     const fetchCompetencias = async () => {
+       try {
+         const response = await fetch('http://localhost:8080/Competencia/competencias');
+         const data = await response.json();
+         setCompetencias(data);
+       } catch (error) {
+         console.error('Erro ao buscar as competências:', error);
+       }
+     };
 
-  //   const fetchCriterios = async () => {
-  //     try {
-  //       const response = await fetch('https://sua-api.com/criterios');
-  //       const data = await response.json();
-  //       setCriterios(data);
-  //     } catch (error) {
-  //       console.error('Erro ao buscar os critérios:', error);
-  //     }
-  //   };
+     const fetchCriterios = async () => {
+       try {
+         const response = await fetch('http://localhost:8080/Criterios/BuscarCriterios');
+         const data = await response.json();
+         setCriterios(data);
+       } catch (error) {
+         console.error('Erro ao buscar os critérios:', error);
+       }
+     };
 
-  //   fetchCompetencias();
-  //   fetchCriterios();
-  // }, []);
+     fetchCompetencias();
+     fetchCriterios();
+   }, []);
 
-  //const carregarCriteriosDaCompetencia = async (competenciaId) => {
-  //  try {
-  //    const response = await fetch(`https://sua-api.com/criterios?competencia=${competenciaId}`);
-  //    const data = await response.json();
-  //    setCriteriosDaCompetencia(data);
-  //  } catch (error) {
-  //    console.error('Erro ao carregar os critérios:', error);
-  //  }
-  //};
+  const carregarCriteriosDaCompetencia = async (competenciaId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/consulta_Competencia/${competenciaId}`);
+      const data = await response.json();
+      setCriteriosDaCompetencia(data);
+    } catch (error) {
+      console.error('Erro ao carregar os critérios:', error);
+    }
+  };
+
+  const onPressConfirmar = async () => {
+
+    console.log(textCompetencia)
+
+    try {
+      const response = await fetch('http://localhost:8080/Competencia', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nome: textCompetencia,
+          tipo: escolhaBotao,
+        }),
+      });
+      if (response.ok) {
+        console.log('Dados enviados com sucesso!');
+      } else {
+        console.error('Falha ao enviar os dados.');
+      }
+    } catch (error) {
+      console.error('Erro ao enviar os dados:', error);
+    }
+
+    try {
+      const response = await fetch('http://localhost:8080/Criterios', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nome: textCriticidade,
+          tipo: isEnable,
+        }),
+      });
+      if (response.ok) {
+        console.log('Dados enviados com sucesso!');
+      } else {
+        console.error('Falha ao enviar os dados.');
+      }
+    } catch (error) {
+      console.error('Erro ao enviar os dados:', error);
+    }
+  };
 
   const onChangeTextCompetencia = (text) => {
     setTextCompetencia(text);
@@ -63,16 +108,6 @@ export default function App() {
   const toggleSwitch = () => {
     setIsEnable((previousState) => !previousState);
   };
-
-  const onPressConfirmar = () => {
-    console.log('Texto digitado para competência:', textCompetencia);
-    console.log('Botão escolhido:', escolhaBotao);
-
-    console.log('Texto digitado para critério:', textCriticidade);
-    console.log('Switch ativado:', isEnable);
-  };
-
-
 
   return (
     <ScrollView style={styles.container}>
