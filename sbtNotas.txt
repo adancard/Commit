@@ -1,89 +1,146 @@
-import React, { useState } from 'react';
-import { Dimensions, ImageBackground, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { ImageBackground, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View, } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 export default function App() {
   const [textCompetencia, setTextCompetencia] = useState('');
   const [escolhaBotao, setEscolhaBotao] = useState('');
   const [textCriticidade, setTextCriticidade] = useState('');
   const [isEnable, setIsEnable] = useState(false);
-  const imagem = require('.assetsimgWhatsAp.png')
+  const [criterios, setCriterios] = useState([]);
+  const [competencias, setCompetencias] = useState([]);
+  const [criteriosDaCompetencia, setCriteriosDaCompetencia] = useState([]);
+  const imagem = require('./assets/img/WhatsAp.png')
 
-  const onChangeTextCompetencia = (text) = {
+  // ISSO INVOLVE O BANCO
+  // useEffect(() => {
+  //   const fetchCompetencias = async () => {
+  //     try {
+  //       const response = await fetch('https://sua-api.com/competencias');
+  //       const data = await response.json();
+  //       setCompetencias(data);
+  //     } catch (error) {
+  //       console.error('Erro ao buscar as competências:', error);
+  //     }
+  //   };
+
+  //   const fetchCriterios = async () => {
+  //     try {
+  //       const response = await fetch('https://sua-api.com/criterios');
+  //       const data = await response.json();
+  //       setCriterios(data);
+  //     } catch (error) {
+  //       console.error('Erro ao buscar os critérios:', error);
+  //     }
+  //   };
+
+  //   fetchCompetencias();
+  //   fetchCriterios();
+  // }, []);
+
+  //const carregarCriteriosDaCompetencia = async (competenciaId) => {
+  //  try {
+  //    const response = await fetch(`https://sua-api.com/criterios?competencia=${competenciaId}`);
+  //    const data = await response.json();
+  //    setCriteriosDaCompetencia(data);
+  //  } catch (error) {
+  //    console.error('Erro ao carregar os critérios:', error);
+  //  }
+  //};
+
+  const onChangeTextCompetencia = (text) => {
     setTextCompetencia(text);
   };
 
-  const onPressBotao = (escolha) = {
+  const onPressBotao = (escolha) => {
     setEscolhaBotao(escolha);
   };
 
-  const onChangeTextCriticidade = (text) = {
+  const onChangeTextCriticidade = (text) => {
     setTextCriticidade(text);
   };
 
-  const toggleSwitch = () = {
-    setIsEnable((previousState) = !previousState);
+  const toggleSwitch = () => {
+    setIsEnable((previousState) => !previousState);
   };
 
-  const onPressConfirmar = () = {
-    console.log('Texto digitado para competência', textCompetencia);
-    console.log('Botão escolhido', escolhaBotao);
+  const onPressConfirmar = () => {
+    console.log('Texto digitado para competência:', textCompetencia);
+    console.log('Botão escolhido:', escolhaBotao);
 
-    console.log('Texto digitado para critério', textCriticidade);
-    console.log('Switch ativado', isEnable);
+    console.log('Texto digitado para critério:', textCriticidade);
+    console.log('Switch ativado:', isEnable);
   };
 
 
 
   return (
-    ScrollView style={styles.container}
-        Text style={styles.titulo}Adicionar CompetenciaText
-        View style={styles.Containersbt}
-          TouchableOpacity style={styles.botao} onPress={() = onPressBotao('S')}
-            Text style={styles.textoButton}SText
-          TouchableOpacity
+    <ScrollView style={styles.container}>
 
-          TouchableOpacity style={styles.botao} onPress={() = onPressBotao('B')}
-            Text style={styles.textoButton}BText
-          TouchableOpacity
+      <Text style={styles.titulo}>Adicionar Competencia</Text>
+      <View style={styles.Containersbt}>
+        <TouchableOpacity style={styles.botao} onPress={() => onPressBotao('S')}>
+          <Text style={styles.textoButton}>S</Text>
+        </TouchableOpacity>
 
-          TouchableOpacity style={styles.botao} onPress={() = onPressBotao('T')}
-            Text style={styles.textoButton}TText
-          TouchableOpacity
-        View
+        <TouchableOpacity style={styles.botao} onPress={() => onPressBotao('B')}>
+          <Text style={styles.textoButton}>B</Text>
+        </TouchableOpacity>
 
-        TextInput
-          style={styles.InputText}
-          value={textCompetencia}
-          onChangeText={onChangeTextCompetencia}
-          placeholder='Digite a Competencia'
-          keyboardType='default'
-        
+        <TouchableOpacity style={styles.botao} onPress={() => onPressBotao('T')}>
+          <Text style={styles.textoButton}>T</Text>
+        </TouchableOpacity>
+      </View>
 
-        Text style={styles.tituloCriticidade}Adicionar CritérioText
+      <TextInput
+        style={styles.InputText}
+        value={textCompetencia}
+        onChangeText={onChangeTextCompetencia}
+        placeholder='Digite a Competencia'
+        keyboardType='default'
+      />
 
-        TextInput
-          style={styles.InputText}
-          value={textCriticidade}
-          onChangeText={onChangeTextCriticidade}
-          placeholder='Digite o Critério'
-          keyboardType='default'
-        
+      <Text style={styles.tituloCriticidade}>Adicionar Critério</Text>
 
-        View style={styles.caixaSelecao}
-          Text style={styles.textoSelecao}DesejávelText
-          Switch
-            trackColor={{ false 'green', true 'red' }}
-            onValueChange={toggleSwitch}
-            value={isEnable}
-            style={styles.criticoEdesejavel}
-          
-          Text style={styles.textoSelecao}CríticoText
-        View
 
-        TouchableOpacity style={styles.confirmar} onPress={onPressConfirmar}
-          Text style={styles.buttonConfirmar}ConfirmarText
-        TouchableOpacity
-    ScrollView
+      <Text style={styles.texto}>Selecione uma competência:</Text>
+      <Picker
+        selectedValue={textCompetencia}
+        style={styles.picker}
+        onValueChange={(itemValue) => {
+          setTextCompetencia(itemValue);
+          carregarCriteriosDaCompetencia(itemValue);
+        }}
+      >
+        {competencias.map((competencia) => (
+          <Picker.Item key={competencia.id} label={competencia.descricao} value={competencia.id} />
+        ))}
+      </Picker>
+
+
+      <TextInput
+        style={styles.InputText}
+        value={textCriticidade}
+        onChangeText={onChangeTextCriticidade}
+        placeholder='Digite o Critério'
+        keyboardType='default'
+      />
+
+      <View style={styles.caixaSelecao}>
+        <Text style={styles.textoSelecao}>Desejável</Text>
+        <Switch
+          trackColor={{ false: 'green', true: 'red' }}
+          onValueChange={toggleSwitch}
+          value={isEnable}
+          style={styles.criticoEdesejavel}
+        />
+        <Text style={styles.textoSelecao}>Crítico</Text>
+      </View>
+
+      <TouchableOpacity style={styles.confirmar} onPress={onPressConfirmar}>
+        <Text style={styles.buttonConfirmar}>Confirmar</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 }
 
@@ -91,73 +148,83 @@ const styles = StyleSheet.create({
 
 
 
-  container {
-    flex 1,
+  container: {
+    flex: 1,
   },
-  Containersbt {
-    flex 1,
-    alignSelf 'center',
-    justifyContent 'space-between',
-    alignItems 'center',
-    flexDirection 'row',
-    width 300,
-    marginTop 20
+  Containersbt: {
+    flex: 1,
+    alignSelf: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: 300,
+    marginTop: 20
   },
-  titulo {
-    textAlign 'center',
-    fontSize 25,
-    marginTop 50
+  titulo: {
+    textAlign: 'center',
+    fontSize: 25,
+    marginTop: 50
   },
-  tituloCriticidade {
-    textAlign 'center',
-    fontSize 25,
-    marginTop 50
+  tituloCriticidade: {
+    textAlign: 'center',
+    fontSize: 25,
+    marginTop: 50
 
   },
-  botao {
-    borderColor 'black',
-    borderWidth 1,
-    width 50,
-    height 50,
-    borderRadius 1000,
-    padding 16,
-    margin 20
+  botao: {
+    borderColor: 'black',
+    borderWidth: 1,
+    width: 50,
+    height: 50,
+    borderRadius: 1000,
+    padding: 16,
+    margin: 20
   },
-  textoButton {
-    textAlign 'center',
-    height 200
+  textoButton: {
+    textAlign: 'center',
+    height: 200
   },
-  InputText {
-    justifyContent 'center',
-    alignSelf 'center',
-    borderColor 'black',
-    borderWidth 1,
-    textAlign 'center',
-    width 300,
-    marginTop 30
+  InputText: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    borderColor: 'black',
+    borderWidth: 1,
+    textAlign: 'center',
+    width: 300,
+    marginTop: 30
   },
-  confirmar {
-    alignSelf 'center',
-    backgroundColor 'green',
-    marginTop 30,
-    height 25,
-    width 200,
-    borderRadius 15
+  confirmar: {
+    alignSelf: 'center',
+    backgroundColor: 'green',
+    marginTop: 30,
+    height: 25,
+    width: 200,
+    borderRadius: 15
   },
-  buttonConfirmar {
-    color 'white',
-    textAlign 'center',
-    padding 4,
+  buttonConfirmar: {
+    color: 'white',
+    textAlign: 'center',
+    padding: 4,
   },
-  caixaSelecao {
-    alignSelf 'center',
-    flexDirection 'row',
-    marginTop 20
+  caixaSelecao: {
+    alignSelf: 'center',
+    flexDirection: 'row',
+    marginTop: 20
 
   },
-  textoSelecao {
-    fontSize 20,
-    alignSelf 'center'
+  textoSelecao: {
+    fontSize: 20,
+    alignSelf: 'center'
 
   },
+  picker: {
+    width: 500,
+    alignSelf: 'center'
+  },
+  texto: {
+
+    textAlign: 'center',
+    marginTop: 30
+
+  }
 });
